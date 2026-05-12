@@ -176,3 +176,5 @@ footer{
   .reveal,.reveal-left,.reveal-right{opacity:1;transform:none;transition:none}
   .scroll-cue{animation:none}
 }
+
+.placeholder-label{display:none}
