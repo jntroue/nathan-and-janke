@@ -11,7 +11,7 @@
 
 // ---------- RSVP link ----------
 // Replace the URL below with your Google Form link once it's ready.
-const RSVP_URL = "https://forms.gle/REPLACE_ME";
+const RSVP_URL = "https://docs.google.com/forms/d/e/1FAIpQLSdc5HSkGMcbARGIfoABw8hUQs6NV7SsPnCZ-sTf8C5I8g_UFA/viewform?usp=publish-editor";
 const rsvpLink = document.getElementById('rsvp-link');
 if (rsvpLink) rsvpLink.href = RSVP_URL;
 
