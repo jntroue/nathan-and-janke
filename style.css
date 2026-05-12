@@ -1,0 +1,177 @@
+/* ---------- Palette ---------- */
+:root{
+  --sage:#9CAF88;
+  --sage-light:#C9D4BE;
+  --sage-bg:#EEF1E8;
+  --white:#FAFAF7;
+  --navy:#1F2A44;
+  --brown:#8B6F4E;
+  --text:#2A2F3A;
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Inter',sans-serif;
+  background:var(--white);color:var(--text);
+  line-height:1.7;font-weight:300;
+}
+h1,h2,h3{font-family:'Cormorant Garamond',serif;font-weight:500;color:var(--navy)}
+
+/* ---------- Reveal animations ---------- */
+.reveal,.reveal-left,.reveal-right{
+  opacity:0;transition:opacity 1s ease, transform 1s ease;
+  will-change:opacity,transform;
+}
+.reveal{transform:translateY(30px)}
+.reveal-left{transform:translateX(-40px)}
+.reveal-right{transform:translateX(40px)}
+.reveal.visible,.reveal-left.visible,.reveal-right.visible{
+  opacity:1;transform:translate(0,0);
+}
+.delay-1{transition-delay:.15s}
+.delay-2{transition-delay:.3s}
+.delay-3{transition-delay:.45s}
+.delay-4{transition-delay:.6s}
+
+/* ---------- Hero ---------- */
+.hero{
+  position:relative;min-height:100vh;
+  background:
+    linear-gradient(rgba(250,250,247,.55),rgba(238,241,232,.85)),
+    url('images/hero.jpg') center/cover no-repeat,
+    var(--sage-light);
+  display:flex;align-items:center;justify-content:center;
+  text-align:center;padding:2rem;
+  border-bottom:1px solid rgba(139,111,78,.2);
+  overflow:hidden;
+}
+.hero-overlay{max-width:760px}
+.hero-eyebrow{
+  text-transform:uppercase;letter-spacing:.35em;font-size:.78rem;
+  color:var(--brown);margin-bottom:1.8rem;
+}
+.hero h1{
+  font-size:clamp(3.5rem,9vw,7rem);line-height:1;color:var(--navy);
+  font-weight:500;letter-spacing:.01em;
+}
+.hero h1 .amp{color:var(--sage);font-style:italic;font-weight:400}
+.hero-divider{
+  display:flex;align-items:center;justify-content:center;gap:1rem;
+  margin-top:2rem;
+}
+.hero-divider span{display:block;width:60px;height:1px;background:var(--brown)}
+.hero-divider small{
+  letter-spacing:.4em;color:var(--navy);font-size:.85rem;font-family:'Inter',sans-serif;
+}
+.hero-location{margin-top:.8rem;color:var(--brown);letter-spacing:.25em;font-size:.85rem;text-transform:uppercase}
+.scroll-cue{
+  display:inline-block;margin-top:3rem;color:var(--navy);
+  text-decoration:none;font-size:1.5rem;
+  animation:bounce 2.2s ease-in-out infinite;
+}
+@keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(8px)}}
+
+/* ---------- Sections ---------- */
+.section{
+  max-width:1000px;margin:0 auto;padding:6rem 1.5rem;text-align:center;
+}
+.section h2{
+  font-size:clamp(2rem,4vw,2.8rem);margin-bottom:2rem;
+  display:inline-block;position:relative;
+}
+.section h2::after{
+  content:"";display:block;width:60px;height:1px;
+  background:var(--sage);margin:.85rem auto 0;
+}
+.section p{max-width:680px;margin:0 auto 1rem;font-size:1.05rem}
+
+.invited,.dresscode,.rsvp,.travel{background:var(--white)}
+.venue,.details,.schedule{background:var(--sage-bg)}
+
+/* ---------- Invited ---------- */
+.guest-greeting{font-family:'Cormorant Garamond',serif;font-size:1.7rem;color:var(--navy)}
+#guest-name{color:var(--sage);font-style:italic}
+.invited-sign{margin-top:1.5rem;font-style:italic;color:var(--brown)}
+
+/* ---------- Venue (split layout) ---------- */
+.split{
+  display:grid;grid-template-columns:1fr 1fr;gap:3rem;
+  margin-top:2rem;align-items:center;text-align:left;
+}
+.split-image{
+  position:relative;min-height:360px;background:var(--sage-light);
+  display:flex;align-items:center;justify-content:center;
+  border-radius:4px;overflow:hidden;
+  box-shadow:0 8px 30px rgba(31,42,68,.08);
+}
+.split-image img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.split-text h3{
+  font-size:1.8rem;color:var(--sage);margin-bottom:.5rem;
+}
+.split-text .braai-heading{margin-top:1.8rem;color:var(--brown)}
+.split-text p{margin:.4rem 0;max-width:none}
+@media(max-width:760px){.split{grid-template-columns:1fr;text-align:center}.split-text p{margin-left:auto;margin-right:auto}}
+
+/* ---------- Details ---------- */
+.detail-grid{
+  display:grid;grid-template-columns:1fr 1fr;gap:2rem;
+  margin-top:2rem;text-align:left;
+}
+.detail-card{
+  background:var(--white);padding:2rem;border-radius:4px;
+  border:1px solid rgba(139,111,78,.15);
+  box-shadow:0 2px 12px rgba(31,42,68,.05);
+}
+.detail-card h3{font-size:1.5rem;margin-bottom:1rem;color:var(--sage)}
+.detail-card p{margin:.25rem 0;font-size:1rem}
+.image-placeholder{
+  display:flex;align-items:center;justify-content:center;
+  min-height:240px;background:var(--sage-light);position:relative;overflow:hidden;
+}
+.image-placeholder img{width:100%;height:100%;object-fit:cover;position:absolute;inset:0}
+.placeholder-label{color:var(--navy);opacity:.55;font-style:italic;font-size:.9rem}
+@media(max-width:760px){.detail-grid{grid-template-columns:1fr}}
+
+/* ---------- Buttons ---------- */
+.btn{
+  display:inline-block;margin-top:1.5rem;padding:.85rem 1.9rem;
+  background:transparent;color:var(--navy);
+  border:1px solid var(--navy);text-decoration:none;
+  letter-spacing:.22em;text-transform:uppercase;font-size:.78rem;
+  transition:all .3s ease;
+}
+.btn:hover{background:var(--navy);color:var(--white);transform:translateY(-2px)}
+.btn-primary{background:var(--sage);border-color:var(--sage);color:var(--white)}
+.btn-primary:hover{background:var(--navy);border-color:var(--navy)}
+
+/* ---------- Dress Code ---------- */
+.swatches{display:flex;justify-content:center;gap:1.8rem;margin:2.5rem 0 1rem;flex-wrap:wrap}
+.swatch{
+  width:120px;height:120px;border-radius:50%;
+  display:flex;align-items:flex-end;justify-content:center;
+  padding-bottom:.7rem;color:#fff;font-size:.78rem;
+  letter-spacing:.22em;text-transform:uppercase;
+  box-shadow:0 6px 18px rgba(0,0,0,.1);
+  transition:transform .35s ease;
+}
+.swatch:hover{transform:translateY(-6px) scale(1.03)}
+.swatch.sage{background:var(--sage)}
+.swatch.navy{background:var(--navy)}
+.swatch.brown{background:var(--brown)}
+.dresscode-note{margin-top:1.5rem;font-style:italic;color:var(--brown)}
+
+/* ---------- RSVP ---------- */
+.rsvp-note{margin-top:1.5rem;font-size:.85rem;color:var(--brown)}
+
+/* ---------- Footer ---------- */
+footer{
+  background:var(--navy);color:var(--sage-light);
+  text-align:center;padding:2rem 1rem;
+  font-size:.85rem;letter-spacing:.1em;
+}
+
+@media (prefers-reduced-motion: reduce){
+  .reveal,.reveal-left,.reveal-right{opacity:1;transform:none;transition:none}
+  .scroll-cue{animation:none}
+}
