@@ -7,7 +7,31 @@ Live at: https://jntroue.github.io/nathan-and-janke/
 Add `?to=Guest+Name` to the URL (use `+` for spaces), e.g.
 - https://jntroue.github.io/nathan-and-janke/?to=Nathan+Conradie
 - https://jntroue.github.io/nathan-and-janke/?to=Janke+Agenbag
-- https://jntroue.github.io/nathan-and-janke/?to=The+Smith+Family
+- https://jntroue.github.io/nathan-and-janke/?to=
+- https://jntroue.github.io/nathan-and-janke/?to=
+- https://jntroue.github.io/nathan-and-janke/?to=
+- https://jntroue.github.io/nathan-and-janke/?to=
+- https://jntroue.github.io/nathan-and-janke/?to=
+- https://jntroue.github.io/nathan-and-janke/?to=
+- https://jntroue.github.io/nathan-and-janke/?to=
+- https://jntroue.github.io/nathan-and-janke/?to=
+- https://jntroue.github.io/nathan-and-janke/?to=
+- https://jntroue.github.io/nathan-and-janke/?to=
+- https://jntroue.github.io/nathan-and-janke/?to=
+- https://jntroue.github.io/nathan-and-janke/?to=
+- https://jntroue.github.io/nathan-and-janke/?to=
+- https://jntroue.github.io/nathan-and-janke/?to=
+- https://jntroue.github.io/nathan-and-janke/?to=
+- https://jntroue.github.io/nathan-and-janke/?to=
+- https://jntroue.github.io/nathan-and-janke/?to=
+- https://jntroue.github.io/nathan-and-janke/?to=
+- https://jntroue.github.io/nathan-and-janke/?to=
+- https://jntroue.github.io/nathan-and-janke/?to=
+- https://jntroue.github.io/nathan-and-janke/?to=
+- https://jntroue.github.io/nathan-and-janke/?to=
+- https://jntroue.github.io/nathan-and-janke/?to=
+- https://jntroue.github.io/nathan-and-janke/?to=
+
 
 If no name is provided, the invite falls back to "Friends & Family".
 
