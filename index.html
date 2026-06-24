@@ -3,123 +3,208 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Nathan & Janke · 27 March 2027</title>
+<meta name="theme-color" content="#1F2A44"/>
+<meta name="description" content="Nathan & Janke are getting married — 27 March 2027 at Stofpad Skuur, Bashewa, South Africa. You're invited to our Bring & Braai celebration."/>
+<title>Nathan &amp; Janke · 27 March 2027</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
+<!-- NAV -->
+<nav class="nav" id="nav" aria-label="Primary">
+  <div class="nav-inner">
+    <a href="#top" class="nav-mark" aria-label="Nathan and Janke, home">N <span>&amp;</span> J</a>
+    <button class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="navLinks" aria-label="Open menu">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#invited">Invitation</a></li>
+      <li><a href="#venue">Venue</a></li>
+      <li><a href="#details">Details</a></li>
+      <li><a href="#schedule">Schedule</a></li>
+      <li><a href="#dresscode">Dress Code</a></li>
+      <li><a href="#rsvp" class="nav-cta">RSVP</a></li>
+    </ul>
+  </div>
+</nav>
+
 <!-- HERO -->
-<header class="hero">
+<header class="hero" id="top">
+  <div class="hero-media" aria-hidden="true"></div>
+  <div class="hero-scrim" aria-hidden="true"></div>
   <div class="hero-overlay">
     <p class="hero-eyebrow reveal">Together with their families</p>
-    <h1 class="reveal delay-1">Nathan <span class="amp">&</span> Janke</h1>
-    <div class="hero-divider reveal delay-2"><span></span><small>27 · MARCH · 2027</small><span></span></div>
-    <p class="hero-location reveal delay-3">Bashewa · South Africa</p>
-    <a href="#invited" class="scroll-cue reveal delay-4">↓</a>
+    <h1 class="hero-title reveal delay-1">Nathan <span class="amp">&amp;</span> Janke</h1>
+    <div class="hero-divider reveal delay-2"><span class="rule"></span><small>27 · MARCH · 2027</small><span class="rule"></span></div>
+    <p class="hero-location reveal delay-3">Stofpad Skuur · Bashewa · South Africa</p>
+    <a href="#invited" class="hero-btn reveal delay-4">View the invitation</a>
   </div>
+  <a href="#invited" class="scroll-cue reveal delay-4" aria-label="Scroll down">
+    <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M19 12l-7 7-7-7"/></svg>
+  </a>
 </header>
+
+<main>
+
+<!-- COUNTDOWN -->
+<section class="countdown" aria-label="Countdown to the wedding">
+  <div class="countdown-inner reveal">
+    <div class="cd-unit"><span class="cd-num" id="cd-days">—</span><span class="cd-label">Days</span></div>
+    <div class="cd-sep" aria-hidden="true"></div>
+    <div class="cd-unit"><span class="cd-num" id="cd-hours">—</span><span class="cd-label">Hours</span></div>
+    <div class="cd-sep" aria-hidden="true"></div>
+    <div class="cd-unit"><span class="cd-num" id="cd-mins">—</span><span class="cd-label">Minutes</span></div>
+    <div class="cd-sep" aria-hidden="true"></div>
+    <div class="cd-unit"><span class="cd-num" id="cd-secs">—</span><span class="cd-label">Seconds</span></div>
+  </div>
+  <p class="countdown-note reveal" id="countdown-note">until we say "I do"</p>
+</section>
 
 <!-- YOU'RE INVITED -->
 <section id="invited" class="section invited">
-  <h2 class="reveal">You're Invited</h2>
-  <p class="guest-greeting reveal">Dear <span id="guest-name">Friends & Family</span>,</p>
-  <p class="invited-body reveal">
-    With joyful hearts, we invite you to share in our wedding day as we say
-    "I do" and begin our life together. Your presence would mean the world to us.
-  </p>
-  <p class="invited-sign reveal">- Nathan & Janke</p>
+  <div class="invited-grid">
+    <figure class="invited-photo reveal-left">
+      <img src="images/couple.jpg" alt="Nathan and Janke" loading="lazy" width="1400" height="2098">
+    </figure>
+    <div class="invited-text">
+      <p class="eyebrow reveal">You're Invited</p>
+      <h2 class="reveal delay-1">A celebration of love</h2>
+      <p class="guest-greeting reveal delay-1">Dear <span id="guest-name">Friends &amp; Family</span>,</p>
+      <p class="invited-body reveal delay-2">
+        With joyful hearts, we invite you to share in our wedding day as we say
+        "I do" and begin our life together. Your presence would mean the world to us.
+      </p>
+      <p class="invited-sign reveal delay-2">— Nathan &amp; Janke</p>
+    </div>
+  </div>
 </section>
 
-<!-- VENUE, BRAAI & EVENT DETAILS (combined) -->
-<section class="section venue">
-  <div class="venue-bg"></div>
+<!-- VENUE -->
+<section id="venue" class="section venue">
+  <div class="venue-bg" aria-hidden="true"></div>
+  <div class="venue-scrim" aria-hidden="true"></div>
   <div class="venue-inner">
-    <h2 class="reveal">The Venue</h2>
-    <h3 class="reveal delay-1">Stofpad Skuur</h3>
-    <p class="reveal delay-2">
+    <p class="eyebrow on-dark reveal">The Venue</p>
+    <h2 class="on-dark reveal delay-1">Stofpad Skuur</h2>
+    <p class="venue-address reveal delay-2">
       Portion 32, Farm Rietfontein<br>
       Garsfontein Rd, Bashewa, 0084
     </p>
-
-    <h4 class="braai-heading reveal delay-2">Bring & Braai</h4>
-    <p class="reveal delay-3">
-      Our celebration is a true South African <strong>Bring & Braai</strong>!
-      Side dishes will be provided, but the main meal will be the
-      <strong>braai food you bring along to cook on the fire with us</strong>.
-    </p>
-    <p class="reveal delay-3">
-      Please also bring <strong>your own drinks</strong> for the day —
-      whatever helps you celebrate in style.
-    </p>
-
-    <div class="event-details reveal delay-3">
-      <h3>Event Details</h3>
-      <p><strong>Saturday, 27 March 2027</strong></p>
-      <p>Ceremony & Reception at Stofpad Skuur</p>
-      <p>More details to follow on this website closer to the date.</p>
-    </div>
-
-    <a class="btn btn-on-dark reveal delay-4" target="_blank"
+    <a class="btn btn-on-dark reveal delay-3" target="_blank" rel="noopener"
        href="https://www.google.com/maps/search/?api=1&query=Stofpad+Skuur+Garsfontein+Rd+Bashewa">
+      <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
       Open in Google Maps
     </a>
   </div>
 </section>
 
-<!-- TRAVEL & ACCOMMODATION -->
-<section class="section travel">
-  <h2 class="reveal">Travel & Accommodation</h2>
-  <p class="reveal">
-    There is a lodge available on or near the venue for guests who would
-    like to stay over. For details on accommodation, directions, or any
-    travel questions, please reach out to
-    <strong>Janke</strong> or <strong>Nathan</strong> directly - we're happy to help.
-  </p>
+<!-- DETAILS: Bring & Braai + Event + Travel -->
+<section id="details" class="section details">
+  <p class="eyebrow reveal">The Day</p>
+  <h2 class="reveal delay-1">Details</h2>
+
+  <div class="cards">
+    <article class="card reveal">
+      <div class="card-icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3c0 1.5-1 2-1 3.5S8 9 8 9M12 3c0 1.5-1 2-1 3.5S12 9 12 9M16 3c0 1.5-1 2-1 3.5S16 9 16 9"/><path d="M4 12h16l-1.2 7.2a2 2 0 0 1-2 1.8H7.2a2 2 0 0 1-2-1.8L4 12z"/></svg>
+      </div>
+      <h3>Bring &amp; Braai</h3>
+      <p>
+        Our celebration is a true South African <strong>Bring &amp; Braai</strong>.
+        Side dishes are provided, but the main meal is the
+        <strong>braai food you bring along</strong> to cook on the fire with us.
+      </p>
+      <p>Please also bring <strong>your own drinks</strong> for the day — whatever helps you celebrate in style.</p>
+    </article>
+
+    <article class="card reveal delay-1">
+      <div class="card-icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4.5" width="18" height="16" rx="2"/><path d="M3 9h18M8 2.5v4M16 2.5v4"/></svg>
+      </div>
+      <h3>Event Details</h3>
+      <p><strong>Saturday, 27 March 2027</strong></p>
+      <p>Ceremony &amp; reception at Stofpad Skuur.</p>
+      <p class="muted">More details to follow on this website closer to the date.</p>
+    </article>
+
+    <article class="card reveal delay-2">
+      <div class="card-icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18M5 21V8l7-4 7 4v13M9 21v-5h6v5"/></svg>
+      </div>
+      <h3>Travel &amp; Stay</h3>
+      <p>A lodge is available on or near the venue for guests who'd like to stay over.</p>
+      <p>For accommodation, directions, or any travel questions, reach out to
+        <strong>Janke</strong> or <strong>Nathan</strong> directly — we're happy to help.</p>
+    </article>
+  </div>
+</section>
+
+<!-- SCHEDULE -->
+<section id="schedule" class="section schedule">
+  <p class="eyebrow reveal">The Timeline</p>
+  <h2 class="reveal delay-1">Schedule</h2>
+  <p class="reveal delay-1 schedule-intro">The timeline for the day is still being finalised. Here's the shape of things — check back closer to the date for exact times.</p>
+
+  <ol class="timeline reveal delay-2">
+    <li class="tl-item">
+      <span class="tl-dot" aria-hidden="true"></span>
+      <div class="tl-body"><h3>Arrival &amp; Welcome</h3><p>Guests arrive at Stofpad Skuur.</p></div>
+    </li>
+    <li class="tl-item">
+      <span class="tl-dot" aria-hidden="true"></span>
+      <div class="tl-body"><h3>Ceremony</h3><p>We say "I do".</p></div>
+    </li>
+    <li class="tl-item">
+      <span class="tl-dot" aria-hidden="true"></span>
+      <div class="tl-body"><h3>Bring &amp; Braai</h3><p>Fire up the coals and celebrate together.</p></div>
+    </li>
+    <li class="tl-item">
+      <span class="tl-dot" aria-hidden="true"></span>
+      <div class="tl-body"><h3>Reception &amp; Dancing</h3><p>Eat, drink, and dance the night away.</p></div>
+    </li>
+  </ol>
+  <p class="schedule-tbc reveal">Times to be confirmed ✨</p>
 </section>
 
 <!-- DRESS CODE -->
-<section class="section dresscode">
-  <h2 class="reveal">Dress Code</h2>
-  <p class="reveal">
-    <strong>Smart & formal</strong> — we'd love for everyone to dress up
-    and feel great in the photos with us.
-  </p>
-  <p class="reveal delay-1">
+<section id="dresscode" class="section dresscode">
+  <p class="eyebrow reveal">What to Wear</p>
+  <h2 class="reveal delay-1">Dress Code</h2>
+  <p class="reveal delay-1"><strong>Smart &amp; formal</strong> — we'd love for everyone to dress up and feel great in the photos with us.</p>
+  <p class="reveal delay-2">
     We're not fussy about colours, so wear whatever makes you feel wonderful…
     just <strong>please, no white</strong> (that one's reserved for the bride 😉),
     and definitely <strong>no kortbroek en plakkies</strong>.
   </p>
-  <p class="reveal delay-2">
-    If you'd like a little inspiration, our wedding palette is below —
-    feel free to match it, or simply complement it.
-  </p>
-  <div class="swatches">
-    <div class="swatch sage reveal"><span>Sage</span></div>
-    <div class="swatch navy reveal delay-1"><span>Navy</span></div>
-    <div class="swatch brown reveal delay-2"><span>Brown</span></div>
+  <p class="reveal delay-2">If you'd like a little inspiration, our wedding palette is below — feel free to match it, or simply complement it.</p>
+
+  <div class="swatches reveal delay-2">
+    <div class="swatch"><span class="swatch-chip sage" aria-hidden="true"></span><span class="swatch-name">Sage</span></div>
+    <div class="swatch"><span class="swatch-chip navy" aria-hidden="true"></span><span class="swatch-name">Navy</span></div>
+    <div class="swatch"><span class="swatch-chip brown" aria-hidden="true"></span><span class="swatch-name">Brown</span></div>
   </div>
   <p class="dresscode-note reveal">Optional palette — wear what makes you feel your best ✨</p>
 </section>
 
-<!-- SCHEDULE -->
-<section class="section schedule">
-  <h2 class="reveal">Schedule</h2>
-  <p class="reveal">The timeline for the day is still being finalised. Please check back here closer to the date for the full schedule.</p>
+<!-- RSVP -->
+<section id="rsvp" class="section rsvp">
+  <div class="rsvp-card reveal">
+    <p class="eyebrow on-dark">Will you join us?</p>
+    <h2 class="on-dark">RSVP</h2>
+    <p class="rsvp-lead">Kindly let us know if you'll be celebrating with us by completing our RSVP form.</p>
+    <a class="btn btn-rsvp" id="rsvp-link" href="#" target="_blank" rel="noopener">Open RSVP Form</a>
+    <p class="rsvp-note" id="rsvp-note"></p>
+  </div>
 </section>
 
-<!-- RSVP -->
-<section class="section rsvp">
-  <h2 class="reveal">RSVP</h2>
-  <p class="reveal">Kindly let us know if you'll be joining us by completing our RSVP form.</p>
-  <a class="btn btn-primary reveal" id="rsvp-link" href="#" target="_blank">Open RSVP Form</a>
-  <p class="rsvp-note reveal"></p>
-</section>
+</main>
 
 <footer>
-  <p>Nathan & Janke · 27 March 2027 · Bashewa, South Africa</p>
+  <p class="footer-names">Nathan <span class="amp">&amp;</span> Janke</p>
+  <p class="footer-meta">27 March 2027 · Stofpad Skuur · Bashewa, South Africa</p>
 </footer>
 
 <script src="script.js"></script>
