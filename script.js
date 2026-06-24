@@ -84,6 +84,42 @@ if (rsvpLink) rsvpLink.href = RSVP_URL;
   }
 })();
 
+/* ---------- Add to Calendar (.ics download) ---------- */
+(function () {
+  const btn = document.getElementById('add-to-calendar');
+  if (!btn) return;
+
+  // 27 March 2027, 14:00–22:00 SAST (UTC+2) -> stored in UTC
+  const ics = [
+    'BEGIN:VCALENDAR',
+    'VERSION:2.0',
+    'PRODID:-//Nathan & Janke//Wedding//EN',
+    'CALSCALE:GREGORIAN',
+    'BEGIN:VEVENT',
+    'UID:nathan-janke-wedding-2027@stofpadskuur',
+    'DTSTAMP:20260101T000000Z',
+    'DTSTART:20270327T120000Z',
+    'DTEND:20270327T200000Z',
+    'SUMMARY:Nathan & Janke\'s Wedding',
+    'DESCRIPTION:Join us to celebrate at our Bring & Braai wedding! Bring your own braai food and drinks. Smart & formal dress.',
+    'LOCATION:Stofpad Skuur, Portion 32 Farm Rietfontein, Garsfontein Rd, Bashewa, 0084',
+    'END:VEVENT',
+    'END:VCALENDAR'
+  ].join('\r\n');
+
+  btn.addEventListener('click', () => {
+    const blob = new Blob([ics], { type: 'text/calendar;charset=utf-8' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'Nathan-and-Janke-Wedding.ics';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
+  });
+})();
+
 /* ---------- Scroll-reveal animations ---------- */
 (function () {
   const items = document.querySelectorAll('.reveal, .reveal-left, .reveal-right');
