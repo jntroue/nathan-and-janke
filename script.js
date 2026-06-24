@@ -120,6 +120,45 @@ if (rsvpLink) rsvpLink.href = RSVP_URL;
   });
 })();
 
+/* ---------- Minimalist map (Leaflet + CartoDB Positron) ---------- */
+(function () {
+  const el = document.getElementById('map');
+  if (!el || typeof L === 'undefined') return;
+
+  const lat = -25.919595728515365;
+  const lng = 28.452461696224077;
+
+  const map = L.map(el, {
+    center: [lat, lng],
+    zoom: 14,
+    scrollWheelZoom: false,
+    zoomControl: true,
+    attributionControl: true,
+  });
+
+  L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+    attribution: '&copy; OpenStreetMap &copy; CARTO',
+    subdomains: 'abcd',
+    maxZoom: 19,
+  }).addTo(map);
+
+  // Simple on-brand pin (green) drawn as an SVG divIcon
+  const pin = L.divIcon({
+    className: 'venue-pin',
+    html: '<svg viewBox="0 0 24 24" width="34" height="34" fill="#5F7355" stroke="#fff" stroke-width="1.2"><path d="M12 2a7 7 0 0 0-7 7c0 5 7 13 7 13s7-8 7-13a7 7 0 0 0-7-7z"/><circle cx="12" cy="9" r="2.5" fill="#fff" stroke="none"/></svg>',
+    iconSize: [34, 34],
+    iconAnchor: [17, 32],
+    popupAnchor: [0, -30],
+  });
+
+  L.marker([lat, lng], { icon: pin, title: 'Stofpad Skuur' })
+    .addTo(map)
+    .bindPopup('<strong>Stofpad Skuur</strong><br>Bashewa');
+
+  // Re-center cleanly if the container resizes
+  window.addEventListener('resize', () => map.invalidateSize());
+})();
+
 /* ---------- Scroll-reveal animations ---------- */
 (function () {
   const items = document.querySelectorAll('.reveal, .reveal-left, .reveal-right');
