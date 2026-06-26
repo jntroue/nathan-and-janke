@@ -405,9 +405,20 @@ strong{font-weight:500;color:var(--navy)}
 }
 .leaflet-control-attribution a{color:var(--sage-deep)}
 .venue-pin{filter:drop-shadow(0 3px 5px rgba(58,63,69,.3))}
+/* Permanent floating label above the pin */
+.venue-label.leaflet-tooltip{
+  background:var(--sage-deep);color:#fff;
+  font-family:var(--serif);font-size:1rem;font-weight:500;letter-spacing:.02em;
+  padding:.35rem .8rem;border:none;border-radius:999px;
+  box-shadow:0 4px 14px rgba(58,63,69,.28);white-space:nowrap;
+}
+.venue-label.leaflet-tooltip::before{
+  border-top-color:var(--sage-deep);
+}
 .leaflet-popup-content-wrapper{border-radius:10px;box-shadow:var(--shadow-md)}
-.leaflet-popup-content{font-family:var(--sans);color:var(--ink);font-size:.9rem}
-.leaflet-popup-content strong{color:var(--sage-deep);font-family:var(--serif);font-size:1.05rem}
+.leaflet-popup-content{font-family:var(--sans);color:var(--ink);font-size:.9rem;text-align:center}
+.leaflet-popup-content strong{color:var(--sage-deep);font-family:var(--serif);font-size:1.1rem}
+.popup-sub{color:var(--ink-soft);font-size:.8rem;letter-spacing:.02em}
 .directions-actions{
   display:flex;justify-content:center;flex-wrap:wrap;gap:1rem;margin-top:2rem;
 }

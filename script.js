@@ -135,7 +135,7 @@ if (rsvpLink) rsvpLink.href = RSVP_URL;
 
     const map = L.map(el, {
       center: [lat, lng],
-      zoom: 14,
+      zoom: 15,
       scrollWheelZoom: false,
       zoomControl: true,
       attributionControl: true,
@@ -147,18 +147,39 @@ if (rsvpLink) rsvpLink.href = RSVP_URL;
       maxZoom: 19,
     }).addTo(map);
 
+    // Soft highlighted area around the venue
+    L.circle([lat, lng], {
+      radius: 350,
+      color: '#5F7355',
+      weight: 1.5,
+      opacity: 0.6,
+      fillColor: '#9CAF88',
+      fillOpacity: 0.18,
+    }).addTo(map);
+
     // Simple on-brand pin (green) drawn as an SVG divIcon
     const pin = L.divIcon({
       className: 'venue-pin',
-      html: '<svg viewBox="0 0 24 24" width="34" height="34" fill="#5F7355" stroke="#fff" stroke-width="1.2"><path d="M12 2a7 7 0 0 0-7 7c0 5 7 13 7 13s7-8 7-13a7 7 0 0 0-7-7z"/><circle cx="12" cy="9" r="2.5" fill="#fff" stroke="none"/></svg>',
-      iconSize: [34, 34],
-      iconAnchor: [17, 32],
-      popupAnchor: [0, -30],
+      html: '<svg viewBox="0 0 24 24" width="40" height="40" fill="#5F7355" stroke="#fff" stroke-width="1.2"><path d="M12 2a7 7 0 0 0-7 7c0 5 7 13 7 13s7-8 7-13a7 7 0 0 0-7-7z"/><circle cx="12" cy="9" r="2.5" fill="#fff" stroke="none"/></svg>',
+      iconSize: [40, 40],
+      iconAnchor: [20, 38],
+      popupAnchor: [0, -34],
     });
 
-    L.marker([lat, lng], { icon: pin, title: 'Stofpad Skuur' })
-      .addTo(map)
-      .bindPopup('<strong>Stofpad Skuur</strong><br>Bashewa');
+    const marker = L.marker([lat, lng], { icon: pin, title: 'Stofpad Skuur' }).addTo(map);
+
+    // Permanent label that floats above the pin
+    marker.bindTooltip('Stofpad Skuur', {
+      permanent: true,
+      direction: 'top',
+      offset: [0, -36],
+      className: 'venue-label',
+    });
+
+    // Richer popup on click
+    marker.bindPopup(
+      '<strong>Stofpad Skuur</strong><br><span class="popup-sub">Bashewa &middot; Pretoria East</span>'
+    );
 
     // Critical: recalculate size once the container is actually rendered/visible.
     // Runs a few times to cover layout settling and reveal transitions.
