@@ -278,12 +278,14 @@ if (rsvpLink) rsvpLink.href = RSVP_URL;
       timeline.classList.remove('active');
     }
 
-    // bloom each node once it comes into view (more forgiving than requiring
-    // the traveler to physically reach it — avoids blank cards on deep-link/landing)
+    // bloom each node ONLY when the traveling ring passes it
+    const travelerAbsY = rect.top + progressPx;
     rows.forEach((row) => {
+      if (row.classList.contains('reached')) return;
       const node = row.querySelector('.tl-node');
-      const nodeTop = node.getBoundingClientRect().top;
-      if (nodeTop < vh * 0.85 && !row.classList.contains('reached')) {
+      const nodeRect = node.getBoundingClientRect();
+      const nodeCenterY = nodeRect.top + nodeRect.height / 2;
+      if (travelerAbsY >= nodeCenterY) {
         row.classList.add('reached');
         burstSparkles(node, row.classList.contains('tl-ido') ? 16 : 9);
       }
