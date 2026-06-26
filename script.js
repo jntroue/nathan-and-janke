@@ -127,37 +127,68 @@ if (rsvpLink) rsvpLink.href = RSVP_URL;
 
   const lat = -25.919595728515365;
   const lng = 28.452461696224077;
+  let built = false;
 
-  const map = L.map(el, {
-    center: [lat, lng],
-    zoom: 14,
-    scrollWheelZoom: false,
-    zoomControl: true,
-    attributionControl: true,
-  });
+  function buildMap() {
+    if (built) return;
+    built = true;
 
-  L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
-    attribution: '&copy; OpenStreetMap &copy; CARTO',
-    subdomains: 'abcd',
-    maxZoom: 19,
-  }).addTo(map);
+    const map = L.map(el, {
+      center: [lat, lng],
+      zoom: 14,
+      scrollWheelZoom: false,
+      zoomControl: true,
+      attributionControl: true,
+    });
 
-  // Simple on-brand pin (green) drawn as an SVG divIcon
-  const pin = L.divIcon({
-    className: 'venue-pin',
-    html: '<svg viewBox="0 0 24 24" width="34" height="34" fill="#5F7355" stroke="#fff" stroke-width="1.2"><path d="M12 2a7 7 0 0 0-7 7c0 5 7 13 7 13s7-8 7-13a7 7 0 0 0-7-7z"/><circle cx="12" cy="9" r="2.5" fill="#fff" stroke="none"/></svg>',
-    iconSize: [34, 34],
-    iconAnchor: [17, 32],
-    popupAnchor: [0, -30],
-  });
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+      attribution: '&copy; OpenStreetMap contributors &copy; CARTO',
+      subdomains: 'abcd',
+      maxZoom: 19,
+    }).addTo(map);
 
-  L.marker([lat, lng], { icon: pin, title: 'Stofpad Skuur' })
-    .addTo(map)
-    .bindPopup('<strong>Stofpad Skuur</strong><br>Bashewa');
+    // Simple on-brand pin (green) drawn as an SVG divIcon
+    const pin = L.divIcon({
+      className: 'venue-pin',
+      html: '<svg viewBox="0 0 24 24" width="34" height="34" fill="#5F7355" stroke="#fff" stroke-width="1.2"><path d="M12 2a7 7 0 0 0-7 7c0 5 7 13 7 13s7-8 7-13a7 7 0 0 0-7-7z"/><circle cx="12" cy="9" r="2.5" fill="#fff" stroke="none"/></svg>',
+      iconSize: [34, 34],
+      iconAnchor: [17, 32],
+      popupAnchor: [0, -30],
+    });
 
-  // Re-center cleanly if the container resizes
-  window.addEventListener('resize', () => map.invalidateSize());
+    L.marker([lat, lng], { icon: pin, title: 'Stofpad Skuur' })
+      .addTo(map)
+      .bindPopup('<strong>Stofpad Skuur</strong><br>Bashewa');
+
+    // Critical: recalculate size once the container is actually rendered/visible.
+    // Runs a few times to cover layout settling and reveal transitions.
+    const fix = () => map.invalidateSize();
+    requestAnimationFrame(fix);
+    setTimeout(fix, 200);
+    setTimeout(fix, 600);
+    window.addEventListener('resize', fix);
+  }
+
+  // Build only once the section is on screen (it starts hidden / far down the page,
+  // so building immediately would give Leaflet a zero-size container = blank map).
+  if ('IntersectionObserver' in window) {
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          buildMap();
+          io.disconnect();
+        }
+      });
+    }, { rootMargin: '200px' });
+    io.observe(el);
+  } else {
+    buildMap();
+  }
+
+  // Safety net: if it's already in view on load, or observer never fires, build after load.
+  window.addEventListener('load', () => setTimeout(buildMap, 800));
 })();
+
 
 /* ---------- Scroll-reveal animations ---------- */
 (function () {
