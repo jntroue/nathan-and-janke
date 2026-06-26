@@ -13,6 +13,8 @@
   --navy-soft:#4E545C;
   --brown:#8B6F4E;
   --brown-soft:#A88A65;
+  --gold:#C9A24B;
+  --gold-light:#E8CE84;
 
   /* Semantic surfaces & text */
   --paper:#FBFAF6;
@@ -409,6 +411,24 @@ strong{font-weight:500;color:var(--navy)}
   100%{opacity:0;transform:scale(2.4)}
 }
 
+/* ---- gold sparkle particles ---- */
+.sparkle{
+  position:absolute;left:50%;top:50%;
+  width:9px;height:9px;pointer-events:none;z-index:5;
+  color:var(--gold);
+  --tx:0px;--ty:0px;--rot:0deg;
+  animation:sparkleFly .85s cubic-bezier(.2,.7,.3,1) forwards;
+}
+.sparkle svg{width:100%;height:100%;
+  filter:drop-shadow(0 0 3px rgba(232,206,132,.9));
+}
+@keyframes sparkleFly{
+  0%{opacity:0;transform:translate(-50%,-50%) scale(.2) rotate(0deg)}
+  15%{opacity:1}
+  60%{opacity:1}
+  100%{opacity:0;transform:translate(calc(-50% + var(--tx)),calc(-50% + var(--ty))) scale(1) rotate(var(--rot))}
+}
+
 /* ---- cards (with directional slide-in) ---- */
 .tl-card{
   position:relative;width:calc(50% - 2.75rem);text-align:left;
@@ -451,11 +471,57 @@ strong{font-weight:500;color:var(--navy)}
 .tl-card p{color:var(--ink-soft);font-size:.96rem;line-height:1.65}
 .schedule-tbc{
   margin:3rem auto 0;
-  display:table;
-  padding:.5rem 1.3rem;border-radius:999px;
-  background:var(--sage-bg);color:var(--sage-deep);
+  display:table;position:relative;
+  padding:.55rem 1.4rem;border-radius:999px;
+  background:linear-gradient(150deg, #faf4e6, var(--sage-bg));
+  color:var(--brown);border:1px solid rgba(201,162,75,.3);
   font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;font-weight:500;
 }
+
+/* ---- special "I do" ceremony block ---- */
+.tl-ido .tl-node{
+  width:22px;height:22px;border-color:var(--gold);
+}
+.tl-ido.reached .tl-node{
+  border-color:var(--gold);
+  background:var(--gold-light);
+  transform:translate(-50%,-50%) scale(1.2);
+  box-shadow:0 0 0 5px var(--paper-2), 0 0 14px 4px rgba(201,162,75,.55);
+  animation:idoNodeGlow 2.6s ease-in-out infinite;
+}
+.tl-ido .tl-node::after{border-color:var(--gold)}
+@keyframes idoNodeGlow{
+  0%,100%{box-shadow:0 0 0 5px var(--paper-2), 0 0 12px 3px rgba(201,162,75,.45)}
+  50%{box-shadow:0 0 0 5px var(--paper-2), 0 0 20px 7px rgba(201,162,75,.7)}
+}
+.tl-ido .tl-card{
+  border-color:rgba(201,162,75,.45);
+  background:linear-gradient(160deg, #fffdf6, #fbf6e9);
+}
+.tl-ido.reached .tl-card{
+  box-shadow:0 14px 40px rgba(201,162,75,.22), 0 0 0 1px rgba(201,162,75,.35);
+  animation:idoCardGlow 3s ease-in-out infinite;
+}
+@keyframes idoCardGlow{
+  0%,100%{box-shadow:0 14px 36px rgba(201,162,75,.18), 0 0 0 1px rgba(201,162,75,.3)}
+  50%{box-shadow:0 16px 50px rgba(201,162,75,.34), 0 0 0 1px rgba(201,162,75,.5)}
+}
+.tl-ido .tl-icon{
+  background:linear-gradient(150deg, var(--gold-light), var(--gold));
+  color:#fff;box-shadow:0 4px 14px rgba(201,162,75,.4);
+}
+.tl-ido:hover .tl-icon{background:var(--gold);transform:scale(1.1) rotate(-6deg)}
+.tl-ido .tl-time{color:var(--gold)}
+.tl-ido .tl-card h3{color:var(--brown)}
+.ido-words{
+  font-family:var(--serif);font-style:italic;font-weight:600;
+  font-size:1.15em;color:var(--gold);
+  background:linear-gradient(90deg,var(--gold),var(--gold-light),var(--gold));
+  background-size:200% auto;-webkit-background-clip:text;background-clip:text;
+  -webkit-text-fill-color:transparent;
+  animation:idoShimmer 3s linear infinite;
+}
+@keyframes idoShimmer{to{background-position:200% center}}
 
 /* ============================================================
    DRESS CODE

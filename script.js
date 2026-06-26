@@ -234,6 +234,27 @@ if (rsvpLink) rsvpLink.href = RSVP_URL;
 
   let ticking = false;
 
+  const SPARKLE_SVG = '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0l2.4 7.2L22 9.6l-6 4.4 2.3 7.6L12 17.4 5.7 21.6 8 14 2 9.6l7.6-2.4z"/></svg>';
+
+  function burstSparkles(host, count) {
+    for (let i = 0; i < count; i++) {
+      const s = document.createElement('span');
+      s.className = 'sparkle';
+      s.innerHTML = SPARKLE_SVG;
+      const angle = (Math.PI * 2 * i) / count + (Math.random() - 0.5) * 0.5;
+      const dist = 26 + Math.random() * 30;
+      s.style.setProperty('--tx', Math.cos(angle) * dist + 'px');
+      s.style.setProperty('--ty', Math.sin(angle) * dist + 'px');
+      s.style.setProperty('--rot', (Math.random() * 360) + 'deg');
+      const size = 7 + Math.random() * 7;
+      s.style.width = size + 'px';
+      s.style.height = size + 'px';
+      s.style.animationDelay = (Math.random() * 0.12) + 's';
+      host.appendChild(s);
+      setTimeout(() => s.remove(), 1100);
+    }
+  }
+
   function update() {
     ticking = false;
     const rect = timeline.getBoundingClientRect();
@@ -262,8 +283,9 @@ if (rsvpLink) rsvpLink.href = RSVP_URL;
     rows.forEach((row) => {
       const node = row.querySelector('.tl-node');
       const nodeTop = node.getBoundingClientRect().top;
-      if (nodeTop < vh * 0.85) {
+      if (nodeTop < vh * 0.85 && !row.classList.contains('reached')) {
         row.classList.add('reached');
+        burstSparkles(node, row.classList.contains('tl-ido') ? 16 : 9);
       }
     });
   }
@@ -279,6 +301,37 @@ if (rsvpLink) rsvpLink.href = RSVP_URL;
   window.addEventListener('resize', onScroll);
   window.addEventListener('load', update);
   update();
+
+  // gentle recurring gold sparkle on the "exact times" pill while it's visible
+  const tbc = document.getElementById('scheduleTbc');
+  if (tbc) {
+    tbc.style.overflow = 'visible';
+    let tbcStarted = false;
+    const tbcSparkle = () => {
+      const r = tbc.getBoundingClientRect();
+      if (r.top < window.innerHeight * 0.92 && r.bottom > 0) {
+        // emit 1-2 sparkles from a random point along the pill
+        const n = 1 + Math.floor(Math.random() * 2);
+        for (let i = 0; i < n; i++) {
+          const s = document.createElement('span');
+          s.className = 'sparkle';
+          s.innerHTML = SPARKLE_SVG;
+          s.style.left = (15 + Math.random() * 70) + '%';
+          s.style.top = (Math.random() < 0.5 ? 10 : 80) + '%';
+          const ang = (Math.random() - 0.5) * Math.PI - Math.PI / 2;
+          const dist = 16 + Math.random() * 18;
+          s.style.setProperty('--tx', Math.cos(ang) * dist + 'px');
+          s.style.setProperty('--ty', Math.sin(ang) * dist + 'px');
+          s.style.setProperty('--rot', (Math.random() * 360) + 'deg');
+          const size = 6 + Math.random() * 6;
+          s.style.width = size + 'px'; s.style.height = size + 'px';
+          tbc.appendChild(s);
+          setTimeout(() => s.remove(), 1000);
+        }
+      }
+    };
+    setInterval(tbcSparkle, 900);
+  }
 })();
 
 /* ---------- Scroll-reveal animations ---------- */
