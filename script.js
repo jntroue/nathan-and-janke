@@ -157,13 +157,15 @@ if (rsvpLink) rsvpLink.href = RSVP_URL;
       fillOpacity: 0.18,
     }).addTo(map);
 
-    // Simple on-brand pin (green) drawn as an SVG divIcon
+    // Simple on-brand pin (green) drawn as an SVG divIcon.
+    // viewBox is 24 wide; tip is at x=12 (center), y≈22 -> at 40px that's (20, 36.7).
     const pin = L.divIcon({
       className: 'venue-pin',
       html: '<svg viewBox="0 0 24 24" width="40" height="40" fill="#5F7355" stroke="#fff" stroke-width="1.2"><path d="M12 2a7 7 0 0 0-7 7c0 5 7 13 7 13s7-8 7-13a7 7 0 0 0-7-7z"/><circle cx="12" cy="9" r="2.5" fill="#fff" stroke="none"/></svg>',
       iconSize: [40, 40],
-      iconAnchor: [20, 38],
+      iconAnchor: [20, 37],
       popupAnchor: [0, -34],
+      tooltipAnchor: [0, -34],
     });
 
     const marker = L.marker([lat, lng], { icon: pin, title: 'Stofpad Skuur' }).addTo(map);
@@ -172,7 +174,7 @@ if (rsvpLink) rsvpLink.href = RSVP_URL;
     marker.bindTooltip('Stofpad Skuur', {
       permanent: true,
       direction: 'top',
-      offset: [0, -36],
+      offset: [0, 0],
       className: 'venue-label',
     });
 
