@@ -190,8 +190,21 @@
   <h2 class="reveal delay-1">Schedule</h2>
   <p class="reveal delay-1 schedule-intro">Here's how the day will unfold. Exact times are being finalised and will be confirmed here closer to the date.</p>
 
-  <div class="timeline reveal delay-2">
+  <div class="timeline reveal delay-2" id="timeline">
+    <!-- animated spine: faint track + green fill that grows with scroll -->
+    <div class="tl-spine" aria-hidden="true">
+      <div class="tl-spine-fill" id="spineFill"></div>
+      <!-- the ring that travels down the spine as you scroll -->
+      <div class="tl-traveler" id="traveler">
+        <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M16 6 l3 3.5 -3 3.5 -3 -3.5 z"/>
+          <circle cx="16" cy="21" r="7"/>
+        </svg>
+      </div>
+    </div>
+
     <div class="tl-row">
+      <span class="tl-node" aria-hidden="true"></span>
       <div class="tl-card">
         <div class="tl-icon" aria-hidden="true">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18M6 21V10M18 21V10M4 10l8-6 8 6M9 21v-5a3 3 0 0 1 6 0v5"/></svg>
@@ -203,6 +216,7 @@
     </div>
 
     <div class="tl-row">
+      <span class="tl-node" aria-hidden="true"></span>
       <div class="tl-card">
         <div class="tl-icon" aria-hidden="true">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-4.5-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 11c0 5.5-7 10-7 10z"/></svg>
@@ -214,6 +228,7 @@
     </div>
 
     <div class="tl-row">
+      <span class="tl-node" aria-hidden="true"></span>
       <div class="tl-card">
         <div class="tl-icon" aria-hidden="true">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3c0 1.5-1 2-1 3.5S8 9 8 9M12 3c0 1.5-1 2-1 3.5S12 9 12 9M16 3c0 1.5-1 2-1 3.5S16 9 16 9"/><path d="M4 12h16l-1.2 7.2a2 2 0 0 1-2 1.8H7.2a2 2 0 0 1-2-1.8L4 12z"/></svg>
@@ -225,6 +240,7 @@
     </div>
 
     <div class="tl-row">
+      <span class="tl-node" aria-hidden="true"></span>
       <div class="tl-card">
         <div class="tl-icon" aria-hidden="true">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>

@@ -213,6 +213,74 @@ if (rsvpLink) rsvpLink.href = RSVP_URL;
 })();
 
 
+/* ---------- Animated schedule timeline ---------- */
+(function () {
+  const timeline = document.getElementById('timeline');
+  const fill = document.getElementById('spineFill');
+  const traveler = document.getElementById('traveler');
+  if (!timeline || !fill || !traveler) return;
+
+  const rows = Array.from(timeline.querySelectorAll('.tl-row'));
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // Reduced motion: just reveal everything, no scroll choreography.
+  if (reduce) {
+    rows.forEach(r => r.classList.add('reached'));
+    timeline.classList.add('active');
+    fill.style.height = '100%';
+    traveler.style.display = 'none';
+    return;
+  }
+
+  let ticking = false;
+
+  function update() {
+    ticking = false;
+    const rect = timeline.getBoundingClientRect();
+    const vh = window.innerHeight;
+
+    // progress 0..1 as the timeline passes a "trigger line" ~55% down the viewport
+    const triggerY = vh * 0.55;
+    const total = rect.height;
+    let progressPx = triggerY - rect.top;
+    progressPx = Math.max(0, Math.min(total, progressPx));
+    const pct = total > 0 ? progressPx / total : 0;
+
+    // grow the fill + move the ring
+    fill.style.height = (pct * 100) + '%';
+    traveler.style.top = progressPx + 'px';
+
+    // show traveler only while the section is engaged
+    if (rect.top < vh && rect.bottom > 0 && pct > 0 && pct < 1) {
+      timeline.classList.add('active');
+    } else {
+      timeline.classList.remove('active');
+    }
+
+    // bloom each node once it comes into view (more forgiving than requiring
+    // the traveler to physically reach it — avoids blank cards on deep-link/landing)
+    rows.forEach((row) => {
+      const node = row.querySelector('.tl-node');
+      const nodeTop = node.getBoundingClientRect().top;
+      if (nodeTop < vh * 0.85) {
+        row.classList.add('reached');
+      }
+    });
+  }
+
+  function onScroll() {
+    if (!ticking) {
+      ticking = true;
+      requestAnimationFrame(update);
+    }
+  }
+
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', onScroll);
+  window.addEventListener('load', update);
+  update();
+})();
+
 /* ---------- Scroll-reveal animations ---------- */
 (function () {
   const items = document.querySelectorAll('.reveal, .reveal-left, .reveal-right');
