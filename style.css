@@ -370,7 +370,7 @@ strong{font-weight:500;color:var(--navy)}
 .schedule{background:var(--paper-2);max-width:none;width:100%}
 .schedule > *{max-width:var(--maxw);margin-left:auto;margin-right:auto}
 .schedule-intro{margin-bottom:2.6rem}
-.schedule > .day{max-width:1040px}
+.schedule > .day{max-width:var(--maxw)}
 
 /* The sky only appears once the script is running; the four cards work without it. */
 .day-sky-wrap{display:none}
@@ -489,13 +489,13 @@ strong{font-weight:500;color:var(--navy)}
 
 /* ---- the four moments ---- */
 .day-steps{
-  list-style:none;display:grid;grid-template-columns:repeat(4,1fr);
-  gap:1rem;margin-top:1.6rem;text-align:left;
+  list-style:none;display:grid;grid-template-columns:repeat(5,1fr);
+  gap:.85rem;margin-top:1.6rem;text-align:left;
 }
 .day-step{
   position:relative;cursor:pointer;
   background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);
-  padding:1.5rem 1.3rem 1.45rem;box-shadow:var(--shadow-sm);
+  padding:1.4rem 1.1rem 1.35rem;box-shadow:var(--shadow-sm);
   transition:transform .5s cubic-bezier(.22,.61,.36,1), box-shadow .4s ease, border-color .4s ease;
 }
 /* little pointer from the active card up to the sky */
@@ -526,8 +526,8 @@ strong{font-weight:500;color:var(--navy)}
   display:inline-block;text-transform:uppercase;letter-spacing:.18em;
   font-size:.68rem;font-weight:500;color:var(--brown);margin-bottom:.4rem;
 }
-.day-step h3{font-size:1.32rem;margin-bottom:.4rem}
-.day-step p{color:var(--ink-soft);font-size:.94rem;line-height:1.62}
+.day-step h3{font-size:1.28rem;margin-bottom:.4rem}
+.day-step p{color:var(--ink-soft);font-size:.92rem;line-height:1.6}
 
 /* ---- the "I do" card stays gold ---- */
 .day-step--ido{border-color:rgba(201,162,75,.45);background:linear-gradient(160deg,#fffdf6,#fbf6e9)}
@@ -890,6 +890,12 @@ a:focus-visible,button:focus-visible{
 /* ============================================================
    RESPONSIVE
    ============================================================ */
+/* Schedule: five cards get tight before the main tablet breakpoint */
+@media (max-width:1020px){
+  .day-steps{grid-template-columns:repeat(3,1fr)}
+  .day-step::before{display:none}
+}
+
 @media (max-width:860px){
   .invited-grid{grid-template-columns:1fr;gap:2rem}
   .invited-photo{max-width:420px;margin:0 auto;width:100%}
@@ -902,7 +908,7 @@ a:focus-visible,button:focus-visible{
 
   /* Schedule: two-by-two cards */
   .day-steps{grid-template-columns:repeat(2,1fr)}
-  .day-step::before{display:none}
+  .day-step:last-child{grid-column:1 / -1}
 
   /* Dress code + RSVP: stack, centred */
   .dress-grid{grid-template-columns:1fr;text-align:center}

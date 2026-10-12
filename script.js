@@ -381,8 +381,9 @@ function burst(host, count, opts) {
 
 
 /* ---------- Schedule: the sun crosses the sky as the day unfolds ----------
-   Stops 0-3 match the four .day-step cards in index.html:
-   morning arrival, late-morning ceremony, afternoon braai, night.        */
+   Stops 0-4 match the five .day-step cards in index.html:
+   morning arrival, ceremony, photos, afternoon braai, night.
+   Adding or removing a card means adding or removing a stop in PATH and KEYS. */
 (function () {
   const day = document.getElementById('day');
   const sky = document.getElementById('daySky');
@@ -395,15 +396,15 @@ function burst(host, count, opts) {
   const pill = document.getElementById('skyPill');
   const arc = document.getElementById('skyArc');
   const starsEl = document.getElementById('skyStars');
-  const LAST = 3;
-  if (steps.length !== LAST + 1) return;      // the scene is drawn for exactly four moments
+  const COUNT = steps.length;
+  const LAST = COUNT - 1;
 
   const clamp = (v, lo, hi) => Math.max(lo, Math.min(hi, v));
   const smooth = (v) => { v = clamp(v, 0, 1); return v * v * (3 - 2 * v); };
 
-  // The sun's path, in % of the sky box. Entries 2..5 are the four stops;
-  // the rest only shape the curve as it comes up from / drops below the horizon.
-  const PATH = [[-37, 122], [-12, 84], [12.5, 45], [37.5, 17], [62.5, 41], [87.5, 98], [112, 140]];
+  // The sun's path, in % of the sky box. Entries 2..6 are the five stops (each sits
+  // above its card); the rest only shape the curve as it comes up from / drops below the horizon.
+  const PATH = [[-30, 126], [-10, 90], [10, 48], [30, 23], [50, 15], [70, 40], [90, 98], [110, 140]];
   function sunAt(p) {
     const c = clamp(p, -1, LAST);
     const i = Math.min(LAST - 1, Math.floor(c));
@@ -420,13 +421,18 @@ function burst(host, count, opts) {
   const KEYS = [
     // morning: soft and fresh, a little warmth on the horizon
     { top: '#C2D3D4', mid: '#E3E9DD', btm: '#F8ECDA', far: '#AEBF9E', near: '#84997A', sil: '#536649', sun: '#F6E3A4' },
-    // late morning / midday: the clearest, brightest sky
+    // late morning: the ceremony
+    { top: '#B7CED3', mid: '#DAE6DE', btm: '#F3F0E1', far: '#ABBC9A', near: '#809675', sil: '#516448', sun: '#F5DF98' },
+    // midday: photos under the clearest, brightest sky
     { top: '#AECAD3', mid: '#D2E3E0', btm: '#EEF2E6', far: '#A9BA98', near: '#7E9470', sil: '#4F6247', sun: '#F4DC8C' },
     // mid to late afternoon: warm gold
     { top: '#BDB28F', mid: '#E8C987', btm: '#F3CD98', far: '#A39763', near: '#70724A', sil: '#414232', sun: '#EFAE5C' },
     // night
     { top: '#23272D', mid: '#343A43', btm: '#4A4F58', far: '#2C3136', near: '#23272B', sil: '#16191C', sun: '#E58B4E' },
   ].map((k) => { const o = {}; Object.keys(k).forEach((n) => { o[n] = hex(k[n]); }); return o; });
+
+  if (PATH.length !== COUNT + 3 || KEYS.length !== COUNT) return;   // scene and cards must match
+  const STOP_W = 100 / COUNT;                 // each stop's share of the sky's width, in %
 
   let W = 0, H = 0;
   function render(p) {
@@ -442,24 +448,24 @@ function burst(host, count, opts) {
     st.setProperty('--sil', 'rgb(' + mix('sil') + ')');
     st.setProperty('--sun-rgb', mix('sun'));
 
-    const night = smooth((c - 2.15) / 0.7);
+    const night = smooth((c - (LAST - 0.85)) / 0.7);
     st.setProperty('--stars-o', night.toFixed(3));
-    st.setProperty('--lights-o', smooth((c - 2.2) / 0.6).toFixed(3));
+    st.setProperty('--lights-o', smooth((c - (LAST - 0.8)) / 0.6).toFixed(3));
     st.setProperty('--cloud-o', (0.85 - 0.72 * night).toFixed(3));
-    st.setProperty('--fire-o', smooth((c - 1.5) / 0.5).toFixed(3));
+    st.setProperty('--fire-o', smooth((c - (LAST - 1.5)) / 0.5).toFixed(3));
     st.setProperty('--arch-o', (0.25 + 0.65 * Math.max(0, 1 - Math.abs(c - 1) / 0.8)).toFixed(3));
     st.setProperty('--win', night > 0.02
       ? 'rgba(248,222,150,' + (0.3 + 0.65 * night).toFixed(3) + ')'
       : 'rgba(251,250,246,.3)');
-    const dark = c > 2.45;
+    const dark = c > LAST - 0.55;
     st.setProperty('--sky-ink', dark ? '#F7F8F3' : '#3A3F45');
     st.setProperty('--pill-bg', dark ? 'rgba(58,63,69,.55)' : 'rgba(251,250,246,.72)');
 
     const s = sunAt(p);
     sun.style.transform = 'translate(' + (s[0] / 100 * W).toFixed(1) + 'px,' + (s[1] / 100 * H).toFixed(1) + 'px)';
     sun.style.opacity = (1 - 0.5 * night).toFixed(3);
-    const rise = smooth((c - 2.25) / 0.6);
-    moon.style.transform = 'translate(' + (0.875 * W).toFixed(1) + 'px,' + ((46 - 22 * rise) / 100 * H).toFixed(1) + 'px)';
+    const rise = smooth((c - (LAST - 0.75)) / 0.6);
+    moon.style.transform = 'translate(' + ((LAST + 0.5) * STOP_W / 100 * W).toFixed(1) + 'px,' + ((46 - 22 * rise) / 100 * H).toFixed(1) + 'px)';
     moon.style.opacity = rise.toFixed(3);
   }
 
@@ -541,7 +547,7 @@ function burst(host, count, opts) {
   // ---- the sky: click a spot, or drag the sun across ----
   function scrub(clientX) {
     const r = sky.getBoundingClientRect();
-    target = clamp(((clientX - r.left) / r.width * 100 - 12.5) / 25, 0, LAST);
+    target = clamp(((clientX - r.left) / r.width * 100 - STOP_W / 2) / STOP_W, 0, LAST);
     setActive(Math.round(target));
     lastTouch = Date.now();
     day.classList.add('touched');
