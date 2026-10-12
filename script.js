@@ -21,8 +21,9 @@ if (rsvpLink) rsvpLink.href = RSVP_URL;
 
 /* ---------- Countdown ---------- */
 (function () {
-  // 27 March 2027, ceremony assumed early afternoon SAST (UTC+2)
-  const target = new Date('2027-03-27T14:00:00+02:00').getTime();
+  // 27 March 2027, late-morning ceremony, SAST (UTC+2).
+  // Update this once the exact time is confirmed.
+  const target = new Date('2027-03-27T11:00:00+02:00').getTime();
   const els = {
     days:  document.getElementById('cd-days'),
     hours: document.getElementById('cd-hours'),
@@ -89,7 +90,8 @@ if (rsvpLink) rsvpLink.href = RSVP_URL;
   const btn = document.getElementById('add-to-calendar');
   if (!btn) return;
 
-  // 27 March 2027, 14:00–22:00 SAST (UTC+2) -> stored in UTC
+  // All-day entry for 27 March 2027 (exact times aren't published yet;
+  // swap in DTSTART/DTEND with times once they're confirmed)
   const ics = [
     'BEGIN:VCALENDAR',
     'VERSION:2.0',
@@ -98,8 +100,8 @@ if (rsvpLink) rsvpLink.href = RSVP_URL;
     'BEGIN:VEVENT',
     'UID:nathan-janke-wedding-2027@stofpadskuur',
     'DTSTAMP:20260101T000000Z',
-    'DTSTART:20270327T120000Z',
-    'DTEND:20270327T200000Z',
+    'DTSTART;VALUE=DATE:20270327',
+    'DTEND;VALUE=DATE:20270328',
     'SUMMARY:Nathan & Janke\'s Wedding',
     'DESCRIPTION:Join us to celebrate at our Bring & Braai wedding! Bring your own braai food and drinks. Smart & formal dress.',
     'LOCATION:Stofpad Skuur, Portion 32 Farm Rietfontein, Garsfontein Rd, Bashewa, 0084',
@@ -380,7 +382,7 @@ function burst(host, count, opts) {
 
 /* ---------- Schedule: the sun crosses the sky as the day unfolds ----------
    Stops 0-3 match the four .day-step cards in index.html:
-   arrival, ceremony, braai (golden hour), dancing (night).               */
+   morning arrival, late-morning ceremony, afternoon braai, night.        */
 (function () {
   const day = document.getElementById('day');
   const sky = document.getElementById('daySky');
@@ -401,7 +403,7 @@ function burst(host, count, opts) {
 
   // The sun's path, in % of the sky box. Entries 2..5 are the four stops;
   // the rest only shape the curve as it comes up from / drops below the horizon.
-  const PATH = [[-37, 112], [-12, 64], [12.5, 32], [37.5, 20], [62.5, 48], [87.5, 98], [112, 140]];
+  const PATH = [[-37, 122], [-12, 84], [12.5, 45], [37.5, 17], [62.5, 41], [87.5, 98], [112, 140]];
   function sunAt(p) {
     const c = clamp(p, -1, LAST);
     const i = Math.min(LAST - 1, Math.floor(c));
@@ -416,9 +418,13 @@ function burst(host, count, opts) {
   // Colours at each stop; everything in between is blended.
   const hex = (h) => [parseInt(h.slice(1, 3), 16), parseInt(h.slice(3, 5), 16), parseInt(h.slice(5, 7), 16)];
   const KEYS = [
-    { top: '#B9CCD0', mid: '#D9E3DA', btm: '#F1F1E4', far: '#A9BA98', near: '#7E9470', sil: '#4F6247', sun: '#F4DE96' },
-    { top: '#C3CFBF', mid: '#E6E3C8', btm: '#F8ECCB', far: '#A8B58D', near: '#7A8E66', sil: '#4C5C40', sun: '#F2D27A' },
-    { top: '#B7A98A', mid: '#E6C27E', btm: '#F2C48E', far: '#A0935F', near: '#6E6F47', sil: '#3F4030', sun: '#EFAE5C' },
+    // morning: soft and fresh, a little warmth on the horizon
+    { top: '#C2D3D4', mid: '#E3E9DD', btm: '#F8ECDA', far: '#AEBF9E', near: '#84997A', sil: '#536649', sun: '#F6E3A4' },
+    // late morning / midday: the clearest, brightest sky
+    { top: '#AECAD3', mid: '#D2E3E0', btm: '#EEF2E6', far: '#A9BA98', near: '#7E9470', sil: '#4F6247', sun: '#F4DC8C' },
+    // mid to late afternoon: warm gold
+    { top: '#BDB28F', mid: '#E8C987', btm: '#F3CD98', far: '#A39763', near: '#70724A', sil: '#414232', sun: '#EFAE5C' },
+    // night
     { top: '#23272D', mid: '#343A43', btm: '#4A4F58', far: '#2C3136', near: '#23272B', sil: '#16191C', sun: '#E58B4E' },
   ].map((k) => { const o = {}; Object.keys(k).forEach((n) => { o[n] = hex(k[n]); }); return o; });
 

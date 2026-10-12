@@ -42,7 +42,7 @@ If no name is provided, the invite falls back to "Friends & Family".
   - `couple.jpg`  – Invitation section
   - `venue.jpg`   – Venue section
   - `details.jpg` – arched photo in the RSVP section
-- **Schedule times:** in `index.html`, replace the text inside each `<span class="day-time">` (e.g. "Early afternoon" -> "14:00"). The sky scene picks the label up automatically.
+- **Schedule times:** in `index.html`, replace the text inside each `<span class="day-time">` (e.g. "Morning" -> "10:00"). The sky scene picks the label up automatically.
 - **Map:** uses OpenStreetMap (street) and Esri (satellite) tiles. No account or API key needed.
 - **Colours / fonts:** see `:root` at the top of `style.css`.
 - **Animations:** elements fade/slide in on scroll automatically.

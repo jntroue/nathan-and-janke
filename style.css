@@ -70,6 +70,15 @@ strong{font-weight:500;color:var(--navy)}
 .amp{font-family:var(--serif);font-style:italic;font-weight:400;color:var(--sage-deep)}
 .muted{color:var(--ink-soft);font-size:.95rem}
 
+/* ---------- Eucalyptus (our flower): sprig artwork + heading flourish ---------- */
+.svg-defs{position:absolute;width:0;height:0;overflow:hidden}
+.leaf-rule{width:150px;margin:-.7rem auto 1.5rem;color:var(--sage)}
+.leaf-rule.on-dark{color:var(--sage-light);margin:0 auto 1.1rem}
+.leaf-rule svg{display:block;width:100%;height:auto;overflow:visible}
+.leaf-half{transform-box:fill-box;transform-origin:2% 80%;animation:leafSway 5s ease-in-out infinite}
+.leaf-gem{fill:var(--gold)}
+@keyframes leafSway{0%,100%{transform:rotate(-2.5deg)}50%{transform:rotate(3deg)}}
+
 /* ---------- Reveal animations ---------- */
 .reveal,.reveal-left,.reveal-right{
   opacity:0;transition:opacity .9s ease, transform .9s cubic-bezier(.22,.61,.36,1);
@@ -610,7 +619,9 @@ strong{font-weight:500;color:var(--navy)}
   stroke-dasharray:640;stroke-dashoffset:640;transition:stroke-dashoffset 2s ease .3s;
 }
 .dress-figure.visible .c-arch-line{stroke-dashoffset:0}
-.c-sprig path{stroke:var(--sage);stroke-width:2;stroke-linecap:round}
+.c-euc{color:var(--sage)}
+.c-euc-sway{transform-box:fill-box;transform-origin:2% 80%;animation:leafSway 6s ease-in-out infinite}
+.c-leaf{color:#8FA680}
 .c-shadow{fill:rgba(58,63,69,.12)}
 .c-veil{fill:rgba(255,255,255,.75);stroke:#E2DDCF;stroke-width:1}
 
@@ -699,6 +710,21 @@ strong{font-weight:500;color:var(--navy)}
   border:1px solid rgba(232,206,132,.55);
   border-radius:50% 50% calc(var(--radius) + 8px) calc(var(--radius) + 8px) / 36.4% 36.4% calc(var(--radius) + 8px) calc(var(--radius) + 8px);
 }
+/* eucalyptus over the arch, candles at its foot */
+.rsvp-garland{
+  position:absolute;left:-12px;top:-22px;width:calc(100% + 24px);height:auto;
+  overflow:visible;pointer-events:none;color:var(--sage);
+  filter:drop-shadow(0 3px 6px rgba(0,0,0,.28));
+}
+.rsvp-candles{position:absolute;bottom:-4%;height:auto;overflow:visible;pointer-events:none}
+.rsvp-candles--left{left:-11%;width:36%}
+.rsvp-candles--right{right:-8%;width:24%}
+.candle-leaves{color:var(--sage)}
+.candle-glow{fill:#F3CF73;opacity:.32;filter:blur(7px);animation:candleGlow 2.6s ease-in-out infinite}
+.candle-flame{transform-box:fill-box;transform-origin:50% 100%;animation:flicker .8s ease-in-out infinite alternate}
+.candle-flame.f-b{animation-duration:.62s}
+.candle-flame.f-c{animation-duration:.95s;animation-delay:-.3s}
+@keyframes candleGlow{0%,100%{opacity:.26}50%{opacity:.44}}
 .rsvp-text h2{color:var(--on-dark);font-size:clamp(2.6rem,6vw,3.8rem);margin-bottom:1rem}
 .rsvp-lead{color:var(--on-dark-soft);font-size:1.08rem;max-width:44ch;margin-bottom:1.8rem}
 .rsvp-deadline-row{display:flex;flex-wrap:wrap;align-items:center;gap:.7rem 1.1rem;margin-bottom:2.1rem}
@@ -782,8 +808,9 @@ strong{font-weight:500;color:var(--navy)}
    FAQ
    ============================================================ */
 .faq{background:transparent}
+.faq .leaf-rule{margin-bottom:0}
 .faq-list{
-  max-width:760px;margin:2.6rem auto 0;text-align:left;
+  max-width:760px;margin:2.2rem auto 0;text-align:left;
   display:flex;flex-direction:column;gap:.9rem;
 }
 .faq-item{
@@ -951,7 +978,7 @@ a:focus-visible,button:focus-visible{
   .detail:hover,.detail.is-active,.day-step.is-active,.btn:hover{transform:none}
   .detail-ring{display:none}
   .day-sky *,.day-sky *::after,.couple *,.rsvp-fireflies i,.btn-rsvp::after,.ido-words,
-  .detail-icon svg,.ico-steam{animation:none !important}
+  .detail-icon svg,.ico-steam,.leaf-half,.rsvp-candles *{animation:none !important}
   .rsvp-fireflies i{opacity:.5}
   .c-arch-line{stroke-dashoffset:0;transition:none}
 }
