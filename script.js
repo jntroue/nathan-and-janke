@@ -18,7 +18,7 @@
    replies to the RSVP sheet. See README.md > "RSVP form".
    RSVP_URL: the old Google Form. Used as the fallback if RSVP_ENDPOINT is empty
    or the pop-up form can't reach the sheet.                                    */
-const RSVP_ENDPOINT = "";
+const RSVP_ENDPOINT = "https://script.google.com/macros/s/AKfycbzGHKY4rmf1G20rGvw77UxUc_KXtFoBRdCH144koVrX-UcFSOtw-BvB2sYmOba0q5wp/exec";
 const RSVP_URL = "https://docs.google.com/forms/d/e/1FAIpQLSdc5HSkGMcbARGIfoABw8hUQs6NV7SsPnCZ-sTf8C5I8g_UFA/viewform?usp=publish-editor";
 const rsvpLink = document.getElementById('rsvp-link');
 if (rsvpLink) rsvpLink.href = RSVP_URL;
