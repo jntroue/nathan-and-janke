@@ -380,6 +380,7 @@ strong{font-weight:500;color:var(--navy)}
   /* all of these are driven from script.js as the sun moves */
   --sil:#4F6247;--hill-far:#A9BA98;--hill-near:#7E9470;
   --win:rgba(251,250,246,.3);--arch-o:.3;--fire-o:0;--lights-o:0;--stars-o:0;--cloud-o:.85;
+  --road:#CDA884;--tarp:#EDE3CC;--people-o:0;--couple-o:0;
   --sky-ink:#3A3F45;--pill-bg:rgba(251,250,246,.72);--sun-rgb:244,222,150;
   --sun-size:clamp(30px,5.2vw,52px);
   position:relative;overflow:hidden;isolation:isolate;
@@ -408,6 +409,12 @@ strong{font-weight:500;color:var(--navy)}
 .sky-cloud-1{left:20%;top:13%;width:13%;animation:cloudDrift 50s ease-in-out infinite alternate}
 .sky-cloud-2{left:66%;top:30%;width:9%;animation:cloudDrift 64s ease-in-out infinite alternate-reverse}
 @keyframes cloudDrift{from{transform:translateX(-40%)}to{transform:translateX(70%)}}
+.sky-birds{
+  position:absolute;z-index:2;left:42%;top:27%;width:7%;height:auto;overflow:visible;
+  opacity:calc(var(--cloud-o) * .55);animation:birdDrift 30s ease-in-out infinite alternate;
+}
+.sky-birds path{fill:none;stroke:var(--sky-ink);stroke-width:1.3;stroke-linecap:round;stroke-linejoin:round}
+@keyframes birdDrift{from{transform:translate(-120%,10%)}to{transform:translate(160%,-25%)}}
 
 .sky-arc{position:absolute;inset:0;z-index:2;width:100%;height:100%;overflow:visible}
 .sky-arc path{
@@ -444,18 +451,39 @@ strong{font-weight:500;color:var(--navy)}
 .sky-hills{position:absolute;left:0;right:0;bottom:0;z-index:4;display:block;width:100%;height:38%}
 .hill-far{fill:var(--hill-far)}
 .hill-near{fill:var(--hill-near)}
+.hill-road{fill:var(--road);opacity:.8}
 
 .sky-farm{
   position:absolute;z-index:5;left:50%;bottom:3.5%;
-  width:min(60%,620px);transform:translateX(-52%);overflow:visible;display:block;
+  width:min(86%,860px);transform:translateX(-50%);overflow:visible;display:block;
 }
 .farm-tree path{fill:none;stroke:var(--sil);stroke-width:5;stroke-linecap:round}
 .farm-tree ellipse,.farm-barn path,.farm-tractor path,.farm-tractor circle{fill:var(--sil)}
 .farm-windows rect{fill:var(--win)}
-.farm-arch path{fill:none;stroke:var(--gold);stroke-width:2.6;stroke-linecap:round}
+.farm-arch path{fill:none;stroke:var(--gold);stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round}
+.farm-arch .arch-drape{stroke:#FBFAF6;stroke-width:3;stroke-opacity:.85}
 .farm-arch circle{fill:#FBFAF6}
 .farm-arch .arch-glow{fill:var(--gold-light);opacity:var(--arch-o);filter:blur(8px)}
 .farm-fire{opacity:var(--fire-o)}
+.farm-bench{fill:var(--sil)}
+.farm-couple{opacity:var(--couple-o)}
+.farm-aloe{fill:none;stroke:var(--hill-far);stroke-width:2.2;stroke-linecap:round}
+/* windpomp */
+.mill-tower{fill:none;stroke:var(--sil);stroke-width:1.6;stroke-linecap:round}
+.mill-tail{fill:var(--sil)}
+.mill-wheel{transform-box:fill-box;transform-origin:center;animation:icoSpin 8s linear infinite}
+.mill-wheel circle{fill:none;stroke:var(--sil);stroke-width:1.4}
+.mill-wheel path{fill:none;stroke:var(--sil);stroke-width:2.8}
+/* boma */
+.boma-tarp{fill:var(--tarp);stroke:var(--sil);stroke-opacity:.32;stroke-width:.8;stroke-linejoin:round}
+.boma-pole{fill:none;stroke:var(--sil);stroke-width:2.4;stroke-linecap:round}
+.boma-rope{fill:none;stroke:var(--sil);stroke-width:.9}
+.boma-wall{fill:var(--road)}
+.boma-basket{fill:var(--sil);stroke:var(--sil);stroke-width:1.6;stroke-linecap:round}
+.farm-people{opacity:var(--people-o);fill:var(--sil)}
+.farm-people .limb{fill:none;stroke:var(--sil);stroke-width:3.2;stroke-linecap:round;stroke-linejoin:round}
+.farm-people .limb.thin{stroke-width:2.2}
+.farm-people .glass{fill:none;stroke:var(--gold-light);stroke-width:1.6;stroke-linecap:round}
 .fire-glow{fill:#F0B25E;opacity:.6;filter:blur(9px)}
 .fire-flame,.fire-core{transform-box:fill-box;transform-origin:50% 100%;animation:flicker .8s ease-in-out infinite alternate}
 .fire-flame{fill:#E9A04E}
@@ -1032,7 +1060,7 @@ a:focus-visible,button:focus-visible{
     background:linear-gradient(var(--paper-2),rgba(244,242,234,0));
   }
   .day-sky{aspect-ratio:1000/520;cursor:default;pointer-events:none;--sun-size:30px}
-  .sky-farm{width:72%}
+  .sky-farm{width:97%}
   .sky-pill{left:.7rem;top:.7rem;font-size:.6rem;padding:.35rem .75rem}
   .sky-hint{right:.8rem;top:.72rem;font-size:.9rem}
   .hint-drag{display:none}

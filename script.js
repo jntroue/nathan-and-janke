@@ -424,15 +424,15 @@ function burst(host, count, opts) {
   const hex = (h) => [parseInt(h.slice(1, 3), 16), parseInt(h.slice(3, 5), 16), parseInt(h.slice(5, 7), 16)];
   const KEYS = [
     // morning: soft and fresh, a little warmth on the horizon
-    { top: '#C2D3D4', mid: '#E3E9DD', btm: '#F8ECDA', far: '#AEBF9E', near: '#84997A', sil: '#536649', sun: '#F6E3A4' },
+    { top: '#C2D3D4', mid: '#E3E9DD', btm: '#F8ECDA', far: '#AEBF9E', near: '#84997A', sil: '#536649', sun: '#F6E3A4', road: '#CDA884', tarp: '#EDE3CC' },
     // late morning: the ceremony
-    { top: '#B7CED3', mid: '#DAE6DE', btm: '#F3F0E1', far: '#ABBC9A', near: '#809675', sil: '#516448', sun: '#F5DF98' },
+    { top: '#B7CED3', mid: '#DAE6DE', btm: '#F3F0E1', far: '#ABBC9A', near: '#809675', sil: '#516448', sun: '#F5DF98', road: '#CCA580', tarp: '#EEE4CE' },
     // midday: photos under the clearest, brightest sky
-    { top: '#AECAD3', mid: '#D2E3E0', btm: '#EEF2E6', far: '#A9BA98', near: '#7E9470', sil: '#4F6247', sun: '#F4DC8C' },
+    { top: '#AECAD3', mid: '#D2E3E0', btm: '#EEF2E6', far: '#A9BA98', near: '#7E9470', sil: '#4F6247', sun: '#F4DC8C', road: '#CBA37C', tarp: '#EFE6D0' },
     // mid to late afternoon: warm gold
-    { top: '#BDB28F', mid: '#E8C987', btm: '#F3CD98', far: '#A39763', near: '#70724A', sil: '#414232', sun: '#EFAE5C' },
+    { top: '#BDB28F', mid: '#E8C987', btm: '#F3CD98', far: '#A39763', near: '#70724A', sil: '#414232', sun: '#EFAE5C', road: '#B8875A', tarp: '#F3E0B8' },
     // night
-    { top: '#23272D', mid: '#343A43', btm: '#4A4F58', far: '#2C3136', near: '#23272B', sil: '#16191C', sun: '#E58B4E' },
+    { top: '#23272D', mid: '#343A43', btm: '#4A4F58', far: '#2C3136', near: '#23272B', sil: '#16191C', sun: '#E58B4E', road: '#3B3532', tarp: '#6A5843' },
   ].map((k) => { const o = {}; Object.keys(k).forEach((n) => { o[n] = hex(k[n]); }); return o; });
 
   if (PATH.length !== COUNT + 3 || KEYS.length !== COUNT) return;   // scene and cards must match
@@ -451,6 +451,8 @@ function burst(host, count, opts) {
     st.setProperty('--hill-near', 'rgb(' + mix('near') + ')');
     st.setProperty('--sil', 'rgb(' + mix('sil') + ')');
     st.setProperty('--sun-rgb', mix('sun'));
+    st.setProperty('--road', 'rgb(' + mix('road') + ')');
+    st.setProperty('--tarp', 'rgb(' + mix('tarp') + ')');
 
     const night = smooth((c - (LAST - 0.85)) / 0.7);
     st.setProperty('--stars-o', night.toFixed(3));
@@ -458,6 +460,9 @@ function burst(host, count, opts) {
     st.setProperty('--cloud-o', (0.85 - 0.72 * night).toFixed(3));
     st.setProperty('--fire-o', smooth((c - (LAST - 1.5)) / 0.5).toFixed(3));
     st.setProperty('--arch-o', (0.25 + 0.65 * Math.max(0, 1 - Math.abs(c - 1) / 0.8)).toFixed(3));
+    // the two of us at the ceremony frame; friends gather at the boma once the fire is lit
+    st.setProperty('--couple-o', smooth(1 - Math.abs(c - 1) / 0.6).toFixed(3));
+    st.setProperty('--people-o', smooth((c - (LAST - 1.7)) / 0.6).toFixed(3));
     st.setProperty('--win', night > 0.02
       ? 'rgba(248,222,150,' + (0.3 + 0.65 * night).toFixed(3) + ')'
       : 'rgba(251,250,246,.3)');
