@@ -13,8 +13,12 @@
   }
 })();
 
-/* ---------- RSVP link ----------
-   Replace the URL below with your Google Form link once it's ready. */
+/* ---------- RSVP settings ----------
+   RSVP_ENDPOINT: the Google Apps Script "Web app" URL (ends in /exec) that saves
+   replies to the RSVP sheet. See README.md > "RSVP form".
+   RSVP_URL: the old Google Form. Used as the fallback if RSVP_ENDPOINT is empty
+   or the pop-up form can't reach the sheet.                                    */
+const RSVP_ENDPOINT = "";
 const RSVP_URL = "https://docs.google.com/forms/d/e/1FAIpQLSdc5HSkGMcbARGIfoABw8hUQs6NV7SsPnCZ-sTf8C5I8g_UFA/viewform?usp=publish-editor";
 const rsvpLink = document.getElementById('rsvp-link');
 if (rsvpLink) rsvpLink.href = RSVP_URL;
@@ -673,6 +677,135 @@ function burst(host, count, opts) {
   }
   fig.addEventListener('click', cheer);
   fig.addEventListener('pointerenter', (e) => { if (e.pointerType === 'mouse') cheer(); });
+})();
+
+
+/* ---------- RSVP pop-up form ---------- */
+(function () {
+  const dialog = document.getElementById('rsvpDialog');
+  const form = document.getElementById('rsvpForm');
+  if (!dialog || !form || !rsvpLink) return;
+  // No sheet connected (or a very old browser): the button keeps opening the Google Form.
+  if (!RSVP_ENDPOINT || typeof dialog.showModal !== 'function' || !window.fetch) return;
+
+  const formView = document.getElementById('rsvpFormView');
+  const doneView = document.getElementById('rsvpDoneView');
+  const nameInput = document.getElementById('rsvpName');
+  const messageInput = document.getElementById('rsvpMessage');
+  const known = document.getElementById('rsvpKnown');
+  const error = document.getElementById('rsvpError');
+  const send = document.getElementById('rsvpSend');
+  const doneTitle = document.getElementById('rsvpDoneTitle');
+  const doneText = document.getElementById('rsvpDoneText');
+  const note = document.getElementById('rsvp-note');
+  const STORE = 'nj-rsvp';
+
+  // Remembers the reply on this device so a guest can see / change it later.
+  const saved = () => { try { return JSON.parse(localStorage.getItem(STORE)) || null; } catch (e) { return null; } };
+  const remember = (reply) => { try { localStorage.setItem(STORE, JSON.stringify(reply)); } catch (e) { /* private mode */ } };
+
+  // text/plain keeps this a "simple" request, which Apps Script web apps accept cross-site.
+  function post(payload) {
+    return fetch(RSVP_ENDPOINT, {
+      method: 'POST',
+      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+      body: JSON.stringify(payload),
+    }).then((res) => res.json());
+  }
+
+  // Has someone already replied under this name? (the sheet only answers yes or no)
+  let checkToken = 0;
+  function checkName() {
+    const name = nameInput.value.trim();
+    const token = ++checkToken;
+    if (name.length < 2) { known.hidden = true; return; }
+    post({ action: 'check', name: name })
+      .then((r) => { if (token === checkToken) known.hidden = !(r && r.found); })
+      .catch(() => { /* the check is a nicety; sending still works without it */ });
+  }
+  nameInput.addEventListener('change', checkName);
+  nameInput.addEventListener('input', () => { checkToken++; known.hidden = true; });
+
+  function showNote() {
+    const reply = saved();
+    if (!note || !reply) return;
+    note.textContent = reply.attending === 'yes'
+      ? "You've replied from this device: you're coming. Tap the button if anything changes."
+      : "You've replied from this device: you can't make it. Tap the button if anything changes.";
+  }
+  showNote();
+
+  function open(e) {
+    e.preventDefault();
+    formView.hidden = false;
+    doneView.hidden = true;
+    error.hidden = true;
+    const reply = saved();
+    if (!nameInput.value) {
+      const invited = new URLSearchParams(window.location.search).get('to');
+      nameInput.value = (reply && reply.name) || (invited ? invited.replace(/\+/g, ' ').trim() : '');
+    }
+    if (reply && !form.querySelector('input[name="attending"]:checked')) {
+      const pick = form.querySelector('input[name="attending"][value="' + reply.attending + '"]');
+      if (pick) pick.checked = true;
+    }
+    dialog.showModal();
+    if (nameInput.value) checkName();
+    else nameInput.focus();
+  }
+  rsvpLink.addEventListener('click', open);
+
+  const close = () => dialog.close();
+  document.getElementById('rsvpClose').addEventListener('click', close);
+  document.getElementById('rsvpDoneClose').addEventListener('click', close);
+  dialog.addEventListener('click', (e) => { if (e.target === dialog) close(); });   // click on the dimmed backdrop
+
+  function fail(html) {
+    error.innerHTML = html;
+    error.hidden = false;
+  }
+
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    error.hidden = true;
+    const name = nameInput.value.replace(/\s+/g, ' ').trim();
+    const picked = form.querySelector('input[name="attending"]:checked');
+    if (name.length < 2) { fail('Please add your name.'); nameInput.focus(); return; }
+    if (!picked) { fail("Please let us know whether you can make it."); return; }
+
+    const finish = (updated) => {
+      const yes = picked.value === 'yes';
+      remember({ name: name, attending: picked.value });
+      showNote();
+      doneTitle.textContent = yes ? 'See you there!' : "We'll miss you";
+      doneText.textContent = (yes
+        ? 'Thank you, ' + name + ". We can't wait to celebrate with you on 27 March 2027."
+        : 'Thank you for letting us know, ' + name + ". You'll be in our thoughts on the day.")
+        + (updated ? ' Your RSVP has been updated.' : '');
+      formView.hidden = true;
+      doneView.hidden = false;
+      doneTitle.focus();
+      if (yes && !REDUCE_MOTION) {
+        burst(doneView, 14, { svg: HEART_SVG, colors: ['#E9A9A0', '#E8CE84', '#9CAF88'], y: '22%', dist: 46, spread: 60, size: 10 });
+      }
+    };
+
+    // Spam bots fill every field, including the hidden one. Don't save those.
+    if (form.elements.website.value) { finish(false); return; }
+
+    send.disabled = true;
+    send.textContent = 'Sending…';
+    post({ action: 'rsvp', name: name, attending: picked.value, message: messageInput.value.trim() })
+      .then((r) => {
+        if (!r || !r.ok) throw new Error((r && r.error) || 'failed');
+        finish(!!r.updated);
+      })
+      .catch(() => {
+        fail('Sorry, that didn\'t go through. Please try again in a moment, or use our '
+          + '<a href="' + RSVP_URL + '" target="_blank" rel="noopener">backup RSVP form</a>.');
+      })
+      .then(() => { send.disabled = false; send.textContent = 'Send RSVP'; });
+  });
 })();
 
 

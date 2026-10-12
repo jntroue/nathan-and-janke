@@ -575,7 +575,7 @@
     <div class="rsvp-text">
       <p class="eyebrow on-dark reveal">Will you join us?</p>
       <h2 class="on-dark reveal delay-1">RSVP</h2>
-      <p class="rsvp-lead reveal delay-1">We can't wait to celebrate with you. Please let us know whether you'll be joining us by completing our RSVP form.</p>
+      <p class="rsvp-lead reveal delay-1">We can't wait to celebrate with you. Please let us know whether you'll be joining us — it only takes a moment.</p>
 
       <div class="rsvp-deadline-row reveal delay-2">
         <div class="rsvp-deadline">
@@ -586,7 +586,7 @@
         <p class="rsvp-daysleft" id="rsvpDaysLeft"></p>
       </div>
 
-      <a class="btn btn-rsvp reveal delay-3" id="rsvp-link" href="#" target="_blank" rel="noopener">Open RSVP Form</a>
+      <a class="btn btn-rsvp reveal delay-3" id="rsvp-link" href="#" target="_blank" rel="noopener">RSVP now</a>
       <p class="rsvp-fineprint reveal delay-3">Out of love for an intimate day, we're only able to host the guests named on your invitation.</p>
       <p class="rsvp-note" id="rsvp-note"></p>
     </div>
@@ -606,6 +606,78 @@
   <p class="footer-names">Nathan <span class="amp">&amp;</span> Janke</p>
   <p class="footer-meta">27 March 2027 · Stofpad Skuur · Bashewa, South Africa</p>
 </footer>
+
+<!-- RSVP pop-up form (replies go to the Google Sheet via apps-script/rsvp.gs) -->
+<dialog class="rsvp-dialog" id="rsvpDialog" aria-labelledby="rsvpDialogTitle">
+  <div class="rsvp-dialog-inner">
+    <button class="rsvp-close" type="button" id="rsvpClose" aria-label="Close">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+    </button>
+
+    <div id="rsvpFormView">
+      <div class="leaf-rule" aria-hidden="true">
+        <svg viewBox="0 0 260 46">
+          <g transform="translate(125 6) scale(-1 1)"><g class="leaf-half"><use href="#euc"/></g></g>
+          <g transform="translate(135 6)"><g class="leaf-half"><use href="#euc"/></g></g>
+          <path class="leaf-gem" d="M130 31l4 5-4 5-4-5z"/>
+        </svg>
+      </div>
+      <p class="eyebrow">27 March 2027 · Stofpad Skuur</p>
+      <h2 id="rsvpDialogTitle">Will you join us?</h2>
+      <p class="rsvp-sub">Kindly reply by 1 February 2027.</p>
+
+      <form id="rsvpForm" novalidate>
+        <label class="field" for="rsvpName">
+          <span class="field-label">Your name</span>
+          <input type="text" id="rsvpName" name="name" autocomplete="name" maxlength="80" required>
+        </label>
+        <p class="rsvp-known" id="rsvpKnown" hidden>We already have an RSVP under this name. Sending again will update it.</p>
+
+        <fieldset class="field">
+          <legend class="field-label">Can you attend?</legend>
+          <div class="choice-row">
+            <label class="choice-card">
+              <input type="radio" name="attending" value="yes" required>
+              <span>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7-4.5-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 11c0 5.5-7 10-7 10z"/></svg>
+                Yes, I'll be there
+              </span>
+            </label>
+            <label class="choice-card choice-no">
+              <input type="radio" name="attending" value="no">
+              <span>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6h16v12H4zM4 7l8 6 8-6"/></svg>
+                Sorry, can't make it
+              </span>
+            </label>
+          </div>
+        </fieldset>
+
+        <label class="field" for="rsvpMessage">
+          <span class="field-label">Comments or questions <em>(optional)</em></span>
+          <textarea id="rsvpMessage" name="message" rows="2" maxlength="1000"></textarea>
+        </label>
+
+        <!-- hidden from people; catches automated spam -->
+        <div class="rsvp-hp" aria-hidden="true">
+          <label>Leave this empty <input type="text" name="website" tabindex="-1" autocomplete="off"></label>
+        </div>
+
+        <p class="rsvp-error" id="rsvpError" role="alert" hidden></p>
+        <button class="btn rsvp-send" type="submit" id="rsvpSend">Send RSVP</button>
+      </form>
+    </div>
+
+    <div class="rsvp-done" id="rsvpDoneView" hidden>
+      <div class="rsvp-done-icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-4.5-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 11c0 5.5-7 10-7 10z"/></svg>
+      </div>
+      <h2 id="rsvpDoneTitle" tabindex="-1">Thank you</h2>
+      <p id="rsvpDoneText"></p>
+      <button class="btn" type="button" id="rsvpDoneClose">Close</button>
+    </div>
+  </div>
+</dialog>
 
 <script src="vendor/leaflet/leaflet.js"></script>
 <script src="script.js"></script>
